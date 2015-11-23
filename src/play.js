@@ -172,7 +172,7 @@ var playState = {
 	    //end of sun hit code
 
 	    //HUD text element
-	    statusText.text = '>LCS Pollux Status\n>>Shield..'+shield+'%\n>>Armour..'+health*2+'%\n>>Engines..'+parseInt(sprite.body.speed/6)+'%\n>>Location..'+parseInt(sprite.body.x)+','+parseInt(sprite.body.y)+'\n>';
+	    statusText.text = '>LCS Efficacious Status\n>>Shield..'+shield+'%\n>>Armour..'+health*2+'%\n>>Engines..'+parseInt(sprite.body.speed/6)+'%\n>>Location..'+parseInt(sprite.body.x)+','+parseInt(sprite.body.y)+'\n>';
 
 	    //keep the objective arrow contained within the screen
 	    wall.body.x = game.camera.x;

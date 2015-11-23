@@ -1,6 +1,6 @@
 var dieState = {
 	create: function() {
-		var dieLabel = game.add.text(80, 80, 'Wasted - Click to respawn', {font: '50px Andale Mono', fill:'#00FF00'});
+		var dieLabel = game.add.text(80, 80, 'Wasted \nClick to respawn', {font: '50px Andale Mono', fill:'#FFF'});
 
 	},
 
