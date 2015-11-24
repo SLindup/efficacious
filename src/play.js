@@ -98,6 +98,15 @@ var playState = {
         retimer.start();
         retimer.pause();
 
+        //Map key
+        mkey = game.input.keyboard.addKey(Phaser.Keyboard.M);
+		map = game.add.sprite(300, 300, 'armour');
+	    map.fixedToCamera = true;
+	   	map.visible = false;
+	   	mkey.onDown.add(function (mkey) {
+	   		map.visible = !map.visible;
+	   	}, this);
+
         //creating cursor keys
         cursors = game.input.keyboard.createCursorKeys();
 
@@ -157,6 +166,11 @@ var playState = {
 	    {
 	        sprite.body.angularVelocity = 0;
 	    }
+
+	    // if(mkey.isDown)
+	    // {
+	    // 	map.visible = !map.visible;
+	    // }
 
 	    //being too close to the sun
 	    if(game.physics.arcade.distanceToXY(sprite, 0, 0) < 300)

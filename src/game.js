@@ -43,6 +43,9 @@ var point;
 var objx = 3995; //objective arrow x and y coords
 var objy = 1035;
 
+var mkey;
+var map;
+
 game.state.add('boot', bootState);
 game.state.add('load', loadState);
 game.state.add('menu', menuState);
