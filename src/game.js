@@ -6,6 +6,9 @@ var tilesprite;
 
 var shieldback;
 
+var playerX = 875;
+var playerY = 925;
+
 //armour
 var armour;
 var armour2;
@@ -15,13 +18,16 @@ var armour5;
 
 //shield
 var shieldbar;
-var shield = 100;
+var shieldTotal = 100;
+var shield = shieldTotal;
 var shieldtimer;
 var health = 50;
+var rechargeTime = 2000;
 
 //items
 var planet;
 var sun;
+var planet2;
 
 //objective
 var arrow;
@@ -45,6 +51,10 @@ var objy = 1035;
 
 var mkey;
 var map;
+
+var pausedText;
+var pText2;
+var pkey;
 
 game.state.add('boot', bootState);
 game.state.add('load', loadState);
