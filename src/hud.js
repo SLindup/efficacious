@@ -83,6 +83,60 @@ function createStatus() {
         statusText.fixedToCamera = true;
 }
 
+function createGalaxyMap() {
+	GMG = game.add.group();
+
+	hyperspace = game.add.sprite(0, 0, 'hyperspace');
+	hyperspace.fixedToCamera = true;
+	GMG.add(hyperspace);
+
+	gMap = game.add.sprite(60, 70, 'galaxyMap');
+	gMap.alpha = 0.9;
+	gMap.fixedToCamera = true;
+	GMG.add(gMap);
+
+	SButton = game.add.sprite(300, 461, 'button');
+	SButton.fixedToCamera = true;
+	SButton.inputEnabled = true;
+	SButton.input.useHandCursor = true;
+	SButton.events.onInputDown.add(jumpSilesia, this);
+
+	AButton = game.add.sprite(275, 480, 'button');
+	AButton.fixedToCamera = true;
+	AButton.inputEnabled = true;
+	AButton.input.useHandCursor = true;
+	AButton.events.onInputDown.add(jumpAzizos, this);
+
+	VButton = game.add.sprite(375, 472, 'button');
+	VButton.fixedToCamera = true;
+
+	GMG.visible = false;
+}
+
+function showGalaxyMap() {
+	AA.visible = false;
+	silesia.visible = false;
+	sprite.visible = false;
+	GMG.visible = true;
+}
+
+function jumpSilesia() {
+	GMG.visible = false;
+	system = "Silesia";
+	loadWorld();
+	sprite.visible = true;
+	sprite.frame = 0;
+	
+}
+
+function jumpAzizos() {
+	GMG.visible = false;
+	system = "Azizos";
+	loadWorld();
+	sprite.visible = true;
+	sprite.frame = 0;
+}
+
 function updateStatus() {
 	//HUD text element
 	    statusText.text = '>LCS Efficacious Status\n>>Shield..'+(shield/shieldTotal)*100+'%\n>>Armour..'+health*2+'%\n>>Engines..'+parseInt(sprite.body.speed/6)+'%\n>>Location..'+parseInt(sprite.body.x)+','+parseInt(sprite.body.y)+'\n>';

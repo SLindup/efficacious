@@ -2,28 +2,20 @@ var playState = {
 	
 
 	create: function() {
-		tilesprite = game.add.tileSprite(1800, 2000, 800, 700, 'background');
+        createSilesia();
+        createAA();
+        loadWorld();
 
-        sun = game.add.sprite(-255, -255, 'sun');
-        sun.scale.setTo(.5, .5);
-
-        planet2 = game.add.sprite(-1050, -2235, 'planet2');
-        planet2.scale.setTo(.04, .04);
-
-        createObjective();
-
-        planet = game.add.sprite(3875, 925, 'planet');
-        planet.scale.setTo(.09, .09);
-        
         sprite = game.add.sprite(playerX, playerY, 'player'); // change arrow coords to nearby
-        //sprite = game.add.sprite(game.world.centerX, game.world.centerY, 'player');
+        sprite.frame = 0;
         sprite.anchor.set(0.5);
+        sprite.animations.add('jump', [0,1,2,3,4,5,6,7,8,9,0], 15, false);
 
         game.physics.enable(sprite, Phaser.Physics.ARCADE);
-        //sprite.body.collideWorldBounds = true;
         sprite.body.maxVelocity.set(600);
 
         createHealthBars();
+        createStatus();
 
         discharge = game.time.create(false);
         discharge.loop(500, this.drain, this, 1);
@@ -36,16 +28,20 @@ var playState = {
         retimer.pause();
 
         //Map key
+        SilesiaMap = game.add.group();
+
         mkey = game.input.keyboard.addKey(Phaser.Keyboard.M);
-		map = game.add.sprite(60, 70, 'map');
-		map.alpha = 0.9;
-	    map.fixedToCamera = true;
-	   	map.visible = false;
+
+        createSilesiaMap();
+        createAAMap();
+
+	   	createGalaxyMap();
 
 	   	mkey.onDown.add(function (mkey) {
-	   		map.visible = !map.visible;
+	   		showMap();
 	   		game.paused = !game.paused;
 	   	}, this);
+	   	//end of map code
 
 	   	pausedText = game.add.text(340, 300, 'PAUSED', {font: 'Andale mono', fontSize: '35px', fill:'#fff'});
 	   	pausedText.fixedToCamera = true;
@@ -53,12 +49,19 @@ var playState = {
 	   	pText2 = game.add.text(325, 340, 'Press P to resume', {font: 'Andale mono', fontSize: '15px', fill:'#fff'});
 	   	pText2.fixedToCamera = true;
 	   	pText2.visible = false;
+
 	   	pkey = game.input.keyboard.addKey(Phaser.Keyboard.P);
 	   	pkey.onDown.add(function (pkey) {
 	   		pausedText.visible = !pausedText.visible;
 	   		pText2.visible = !pText2.visible;
 	   		game.paused = !game.paused;
 	   	}, this);
+
+	   	jkey = game.input.keyboard.addKey(Phaser.Keyboard.J);
+	   	jkey.onDown.add(function (jkey) {
+	   		sprite.animations.play('jump');
+	   		game.time.events.add(Phaser.Timer.SECOND * .6, showGalaxyMap, this);
+	   	})
 
         //creating cursor keys
         cursors = game.input.keyboard.createCursorKeys();
@@ -67,8 +70,6 @@ var playState = {
         game.camera.follow(sprite);
         //setting up deadzone, background doesn't move until player hits edge of this
         game.camera.deadzone = new Phaser.Rectangle(100, 100, 600, 400);
-
-        createStatus();
 	},
 
 	update: function() {
@@ -80,6 +81,12 @@ var playState = {
 
     	tilesprite.tilePosition.x = -game.camera.x;
     	tilesprite.tilePosition.y = -game.camera.y;
+
+    	AAtilesprite.x = game.camera.x;
+    	AAtilesprite.y = game.camera.y;
+
+    	AAtilesprite.tilePosition.x = -game.camera.x;
+    	AAtilesprite.tilePosition.y = -game.camera.y;
 
     	//Player movement
     	if (cursors.up.isDown)
@@ -114,7 +121,7 @@ var playState = {
 	    }
 
 	    //being too close to the sun
-	    if(game.physics.arcade.distanceToXY(sprite, 0, 0) < 300)
+	    if(game.physics.arcade.distanceToXY(sprite, 0, 0) < 300 && system == "Silesia")
 	    {
 	        retimer.pause();
 	        discharge.resume();

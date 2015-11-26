@@ -4,10 +4,19 @@ var sprite;
 var cursors;
 var tilesprite;
 
+var system = "Azizos";
+
+var gMap;
+var hyperspace;
+var GMG;
+var SButton;
+var AButton;
+var VButton;
+
 var shieldback;
 
-var playerX = 875;
-var playerY = 925;
+var playerX = 300;
+var playerY = -421;
 
 //armour
 var armour;
@@ -24,10 +33,23 @@ var shieldtimer;
 var health = 50;
 var rechargeTime = 2000;
 
-//items
+//silesia
+var silesia;
 var planet;
 var sun;
 var planet2;
+
+//ArsuAzizos
+var AA;
+var AAtilesprite;
+var arsu;
+var azizos;
+var qos;
+var moloch;
+var martu;
+var ashratu;
+var AAmap;
+var AAmG;
 
 //objective
 var arrow;
@@ -50,11 +72,18 @@ var objx = 3995; //objective arrow x and y coords
 var objy = 1035;
 
 var mkey;
+var SilesiaMap;
 var map;
+var mText;
+var mDesc;
+var mDesc2;
+var mDescS;
 
 var pausedText;
 var pText2;
 var pkey;
+
+var jkey;
 
 game.state.add('boot', bootState);
 game.state.add('load', loadState);
