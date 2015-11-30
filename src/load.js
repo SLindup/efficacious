@@ -12,6 +12,9 @@ var loadState = {
     game.load.image('hyperspace', 'assets/hyperspace.png');
     game.load.image('button', 'assets/button.png');
 
+    game.load.image('bullet', 'assets/bullets2.png');
+    game.load.image('enemy', 'assets/enemy.png');
+
     //Silesia
     game.load.image('background','assets/Silesia/deep-space.jpg');
     game.load.image('planet', 'assets/Silesia/bohemia.png');
@@ -30,6 +33,11 @@ var loadState = {
     game.load.image('AAmap', 'assets/AA/AAmap.png');
 
     //Vichama
+    game.load.image('Vbg', 'assets/Vichama/space2.jpg');
+    game.load.image('vichama', 'assets/Vichama/vichama.png');
+    game.load.image('Kon', 'assets/Vichama/Kon.png');
+    game.load.image('Supay', 'assets/Vichama/Supay.png');
+    game.load.image('Vmap', 'assets/Vichama/map.png');
     },
 
     create: function() {

@@ -4,7 +4,17 @@ var sprite;
 var cursors;
 var tilesprite;
 
-var system = "Azizos";
+//weapon variables
+var bullets;
+var bulletTime = 0;
+
+//enemy variables
+var enemies;
+var enemyBullets;
+var enemiesTotal = 0;
+var enemiesAlive = 0;
+
+var system = "Vichama";
 
 var gMap;
 var hyperspace;
@@ -51,6 +61,30 @@ var ashratu;
 var AAmap;
 var AAmG;
 
+var AAmD;
+var ArsuM;
+var AzizosM;
+var QosM;
+var MolochM;
+var MartuM;
+var AshratuM;
+
+var AAarrow;
+
+//Vichama
+var vichama;
+var Vtilesprite;
+var vSun;
+var kon;
+var supay;
+var vMap;
+var VmG;
+
+var VmD;
+var VmKon;
+var VmSupay;
+var VmVichana;
+
 //objective
 var arrow;
 var walls;
@@ -70,6 +104,8 @@ var statusText;
 var point;
 var objx = 3995; //objective arrow x and y coords
 var objy = 1035;
+
+var here;
 
 var mkey;
 var SilesiaMap;

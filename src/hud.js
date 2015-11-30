@@ -33,43 +33,45 @@ function createHealthBars() {
         shieldbar.animations.add('low', [0,1], 3, true);
 }
 
-function createObjective() {
+function createWalls() {
 	walls = game.add.group();
-        walls.enableBody = true;
+    walls.enableBody = true;
 
-        wall = walls.create(game.camera.x, game.camera.y);
-        wall.scale.x = 800;
-        wall.scale.y = 1;
-        game.physics.enable(wall, Phaser.Physics.ARCADE);
-        wall.body.immovable = true;
+    wall = walls.create(game.camera.x, game.camera.y);
+    wall.scale.x = 800;
+    wall.scale.y = 1;
+    game.physics.enable(wall, Phaser.Physics.ARCADE);
+    wall.body.immovable = true;
 
-        wall2 = walls.create(game.camera.x, (game.camera.y+700));
-        wall2.scale.x = 800;
-        wall2.scale.y = 1;
-        // wall.anchor.setTo(0.5, 0.5);
-        // wall2.angle = 270;
-        game.physics.enable(wall2, Phaser.Physics.ARCADE);
-        wall2.body.immovable = true;
+    wall2 = walls.create(game.camera.x, (game.camera.y+700));
+    wall2.scale.x = 800;
+    wall2.scale.y = 1;
+    // wall.anchor.setTo(0.5, 0.5);
+    // wall2.angle = 270;
+    game.physics.enable(wall2, Phaser.Physics.ARCADE);
+    wall2.body.immovable = true;
 
-        wall3 = walls.create(game.camera.x, game.camera.y);
-        wall3.scale.x = 1;
-        wall3.scale.y = 700;
-        wall3.anchor.setTo(0.5, 0.5);
-        wall3.angle = 270;
-        game.physics.enable(wall3, Phaser.Physics.ARCADE);
-        wall3.body.immovable = true;
+    wall3 = walls.create(game.camera.x, game.camera.y);
+    wall3.scale.x = 1;
+    wall3.scale.y = 700;
+    wall3.anchor.setTo(0.5, 0.5);
+    wall3.angle = 270;
+    game.physics.enable(wall3, Phaser.Physics.ARCADE);
+    wall3.body.immovable = true;
 
-        wall4 = walls.create(game.camera.x+game.camera.width, game.camera.y);
-        wall4.scale.x = 1;
-        wall4.scale.y = 700;
-        wall4.anchor.setTo(0.5, 0.5);
-        wall4.angle = 270;
-        game.physics.enable(wall4, Phaser.Physics.ARCADE);
-        wall4.body.immovable = true;
+    wall4 = walls.create(game.camera.x+game.camera.width, game.camera.y);
+    wall4.scale.x = 1;
+    wall4.scale.y = 700;
+    wall4.anchor.setTo(0.5, 0.5);
+    wall4.angle = 270;
+    game.physics.enable(wall4, Phaser.Physics.ARCADE);
+    wall4.body.immovable = true;
+}
 
+function createObjective() {
 	arrow = game.add.sprite(770, 700, 'planet'); // change coords to near player
-        arrow.scale.setTo(0.01, 0.01);
-        game.physics.enable(arrow, Phaser.Physics.ARCADE);
+    arrow.scale.setTo(0.01, 0.01);
+    game.physics.enable(arrow, Phaser.Physics.ARCADE);
 }
 
 function createStatus() {
@@ -100,15 +102,21 @@ function createGalaxyMap() {
 	SButton.inputEnabled = true;
 	SButton.input.useHandCursor = true;
 	SButton.events.onInputDown.add(jumpSilesia, this);
+	GMG.add(SButton);
 
 	AButton = game.add.sprite(275, 480, 'button');
 	AButton.fixedToCamera = true;
 	AButton.inputEnabled = true;
 	AButton.input.useHandCursor = true;
 	AButton.events.onInputDown.add(jumpAzizos, this);
+	GMG.add(AButton);
 
 	VButton = game.add.sprite(375, 472, 'button');
 	VButton.fixedToCamera = true;
+	VButton.inputEnabled = true;
+	VButton.input.useHandCursor = true;
+	VButton.events.onInputDown.add(jumpVichama, this);
+	GMG.add(VButton);
 
 	GMG.visible = false;
 }
@@ -116,17 +124,24 @@ function createGalaxyMap() {
 function showGalaxyMap() {
 	AA.visible = false;
 	silesia.visible = false;
+	vichama.visible = false;
 	sprite.visible = false;
 	GMG.visible = true;
 }
+
+// function moveShip() {
+// 	sprite.rotation = game.Physics.ARCADE.moveToXY(sprite, 0, 0, 300);
+// }
 
 function jumpSilesia() {
 	GMG.visible = false;
 	system = "Silesia";
 	loadWorld();
+	//moveShip();
 	sprite.visible = true;
 	sprite.frame = 0;
-	
+	arrow.x = sprite.body.x;
+	arrow.y = sprite.body.y;
 }
 
 function jumpAzizos() {
@@ -137,9 +152,17 @@ function jumpAzizos() {
 	sprite.frame = 0;
 }
 
+function jumpVichama() {
+	GMG.visible = false;
+	system = "Vichama";
+	loadWorld();
+	sprite.visible = true;
+	sprite.frame = 0;
+}
+
 function updateStatus() {
 	//HUD text element
-	    statusText.text = '>LCS Efficacious Status\n>>Shield..'+(shield/shieldTotal)*100+'%\n>>Armour..'+health*2+'%\n>>Engines..'+parseInt(sprite.body.speed/6)+'%\n>>Location..'+parseInt(sprite.body.x)+','+parseInt(sprite.body.y)+'\n>';
+	    statusText.text = '>LCS Efficacious Status\n>>Shield..'+parseInt((shield/shieldTotal)*100)+'%\n>>Armour..'+health*2+'%\n>>Engines..'+parseInt(sprite.body.speed/6)+'%\n>>Location..'+parseInt(sprite.body.x)+','+parseInt(sprite.body.y)+'\n>'+here.x+here.y;
 }
 
 function updateObjective() {

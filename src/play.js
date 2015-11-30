@@ -4,18 +4,16 @@ var playState = {
 	create: function() {
         createSilesia();
         createAA();
+        createVichama();
         loadWorld();
 
-        sprite = game.add.sprite(playerX, playerY, 'player'); // change arrow coords to nearby
-        sprite.frame = 0;
-        sprite.anchor.set(0.5);
-        sprite.animations.add('jump', [0,1,2,3,4,5,6,7,8,9,0], 15, false);
-
-        game.physics.enable(sprite, Phaser.Physics.ARCADE);
-        sprite.body.maxVelocity.set(600);
+        createBullets();
+        createPlayer();
 
         createHealthBars();
         createStatus();
+
+        createWalls();
 
         discharge = game.time.create(false);
         discharge.loop(500, this.drain, this, 1);
@@ -28,12 +26,16 @@ var playState = {
         retimer.pause();
 
         //Map key
-        SilesiaMap = game.add.group();
-
         mkey = game.input.keyboard.addKey(Phaser.Keyboard.M);
 
         createSilesiaMap();
         createAAMap();
+        createVichamaMap();
+
+        here = game.add.sprite(10, 10,'here');
+        here.fixedToCamera = true;
+        here.alpha = 0.9;
+        here.visible = false;
 
 	   	createGalaxyMap();
 
@@ -63,6 +65,8 @@ var playState = {
 	   		game.time.events.add(Phaser.Timer.SECOND * .6, showGalaxyMap, this);
 	   	})
 
+	   	game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
+
         //creating cursor keys
         cursors = game.input.keyboard.createCursorKeys();
 
@@ -88,6 +92,12 @@ var playState = {
     	AAtilesprite.tilePosition.x = -game.camera.x;
     	AAtilesprite.tilePosition.y = -game.camera.y;
 
+    	Vtilesprite.x = game.camera.x;
+    	Vtilesprite.y = game.camera.y;
+
+    	Vtilesprite.tilePosition.x = -game.camera.x;
+    	Vtilesprite.tilePosition.y = -game.camera.y;
+
     	//Player movement
     	if (cursors.up.isDown)
 	    {
@@ -109,15 +119,21 @@ var playState = {
 	    //Player rotation
 	    if (cursors.left.isDown)
 	    {
-	        sprite.body.angularVelocity = -70;
+	        sprite.body.angularVelocity = -80;
 	    }
 	    else if (cursors.right.isDown)
 	    {
-	        sprite.body.angularVelocity = 70;
+	        sprite.body.angularVelocity = 80;
 	    }
 	    else
 	    {
 	        sprite.body.angularVelocity = 0;
+	    }
+
+	    //firing weapon
+	    if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
+	    {
+	    	fireBullet();
 	    }
 
 	    //being too close to the sun
