@@ -47,7 +47,18 @@ function drain(dp)
 	    }
 	    if(health == 0)
 	    {
-	        die();
+	        var explosionAnimation = explosions.getFirstExists(false);
+	        if(!d)
+	        {
+				explosionAnimation.reset(sprite.x, sprite.y);
+				d = true;
+			}
+			explosionAnimation.scale.setTo(1.5, 1.5);
+			explosionAnimation.play('explosion', 30, false, true);
+
+			game.time.events.add(Phaser.Timer.SECOND * .6, die, this);
+
+	        //die();
 	    }
 	    shieldbar.scale.setTo(shield/shieldTotal, 1);
 	    armourDrain();

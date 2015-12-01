@@ -4,6 +4,8 @@ var sprite;
 var cursors;
 var tilesprite;
 
+var d = false;
+
 //weapon variables
 var bullets;
 var bulletTime = 0;
