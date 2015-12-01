@@ -162,7 +162,7 @@ function jumpVichama() {
 
 function updateStatus() {
 	//HUD text element
-	    statusText.text = '>LCS Efficacious Status\n>>Shield..'+parseInt((shield/shieldTotal)*100)+'%\n>>Armour..'+health*2+'%\n>>Engines..'+parseInt(sprite.body.speed/6)+'%\n>>Location..'+parseInt(sprite.body.x)+','+parseInt(sprite.body.y)+'\n>'+here.x+here.y;
+	    statusText.text = '>LCS Efficacious Status\n>>Shield..'+parseInt((shield/shieldTotal)*100)+'%\n>>Armour..'+health*2+'%\n>>Engines..'+parseInt(sprite.body.speed/6)+'%\n>>Location..'+parseInt(sprite.body.x)+','+parseInt(sprite.body.y)+'\n>C:'+enemiesAlive+'V:'+VicEnemies+SilEnemies+AAEnemies+QosB;
 }
 
 function updateObjective() {

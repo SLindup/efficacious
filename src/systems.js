@@ -77,21 +77,29 @@ function createVichama() {
 }
 
 function loadWorld() {
+	shield = shieldTotal;
 	if(system == "Silesia")
 	{
 		silesia.visible = true;
+		if(QosB = true)
+		{
+			createEnemies(SilEnemies, objx, objy);
+		}
 	}
 	else if(system == "Azizos")
 	{
 		AA.visible = true;
+		createEnemies(AAEnemies, Aobjx, Aobjy);
 	}
 	else if(system == "Vichama")
 	{
 		vichama.visible = true;
+		createEnemies(VicEnemies, Vobjx, Vobjy);
 	}
 	else
 	{
 		silesia.visible = true;
+		createEnemies(SilEnemies, objx, objy);
 	}
 }
 

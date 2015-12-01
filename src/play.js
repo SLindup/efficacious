@@ -5,10 +5,31 @@ var playState = {
         createSilesia();
         createAA();
         createVichama();
-        loadWorld();
-
-        createBullets();
         createPlayer();
+        createBullets();
+        //loadWorld();
+
+        //createBullets();
+        //createPlayer();
+        sprite.bringToTop();
+
+        createExplosions();
+        createEnemyBullets();
+        
+        loadWorld();
+        
+     //    if(system == "Silesia")
+     //    {
+     //    	createEnemies(SilEnemies, Objx, Objy);
+     //    }
+     //    else if(system == "Azizos")
+     //    {
+     //    	createEnemies(AAEnemies, Aobjx, Aobjy);
+     //    }
+     //    else if(system == "Vichama")
+     //    {
+	    //     //createEnemies(VicEnemies, Vobjx, Vobjy);
+	    // }
 
         createHealthBars();
         createStatus();
@@ -16,7 +37,7 @@ var playState = {
         createWalls();
 
         discharge = game.time.create(false);
-        discharge.loop(500, this.drain, this, 1);
+        discharge.loop(500, drain, this, 1);
         discharge.start();
         discharge.pause();
 
@@ -24,6 +45,16 @@ var playState = {
         retimer.loop(rechargeTime, this.recharge, this);
         retimer.start();
         retimer.pause();
+
+        wdrain = game.time.create(false);
+        wdrain.loop(500, this.drain, this, wdp);
+        wdrain.start();
+        wdrain.pause();
+
+        wcharge = game.time.create(false);
+        wcharge.loop(rechargeTime, this.recharge, this);
+        wcharge.start();
+        wcharge.pause();
 
         //Map key
         mkey = game.input.keyboard.addKey(Phaser.Keyboard.M);
@@ -61,6 +92,7 @@ var playState = {
 
 	   	jkey = game.input.keyboard.addKey(Phaser.Keyboard.J);
 	   	jkey.onDown.add(function (jkey) {
+	   		saveEnemies();
 	   		sprite.animations.play('jump');
 	   		game.time.events.add(Phaser.Timer.SECOND * .6, showGalaxyMap, this);
 	   	})
@@ -152,26 +184,8 @@ var playState = {
 	    updateStatus();
 
 	    updateObjective();
-	},
 
-	drain: function(dp)
-	{
-	    if(shield > 0)
-	    {
-	        shield -= dp;
-	        
-	    }
-	    if(shield == 0 && health > 0)
-	    {
-	        health -= dp;
-	    }
-	    if(health == 0)
-	    {
-	        this.die();
-	    }
-	    shieldbar.scale.setTo(shield/shieldTotal, 1);
-	    this.armourDrain();
-	    shieldbar.animations.play('low');
+	    checkHit();
 	},
 
 	recharge: function()
@@ -183,34 +197,6 @@ var playState = {
 	    shieldbar.scale.setTo(shield/shieldTotal, 1);
 	    shieldbar.animations.stop();
 	    shieldbar.frame = 0;
-	},
-
-	armourDrain: function()
-	{
-	    if(health >= 40)
-	    {
-	        armour5.scale.setTo((health-40)/10, 1);
-	    }
-	    if(health >= 30 && health < 40)
-	    {
-	        armour4.scale.setTo((health-30)/10, 1);
-	    }
-	    if(health >= 20 && health <30)
-	    {
-	        armour3.scale.setTo((health - 20)/10, 1);
-	    }
-	    if(health >=10 && health < 20)
-	    {
-	        armour2.scale.setTo((health - 10)/ 10, 1);
-	    }
-	    if(health >=0 && health < 10)
-	    {
-	        armour.scale.setTo((health)/ 10, 1); 
-	    }
-	},
-
-	die: function() {
-		game.state.start('die');
 	}
 
 };

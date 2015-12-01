@@ -13,7 +13,9 @@ var loadState = {
     game.load.image('button', 'assets/button.png');
 
     game.load.image('bullet', 'assets/bullets2.png');
+    game.load.image('ebullet', 'assets/bullets.png');
     game.load.image('enemy', 'assets/enemy.png');
+    game.load.spritesheet('explosion', 'assets/explosion.png', 64, 64, 24);
 
     //Silesia
     game.load.image('background','assets/Silesia/deep-space.jpg');
