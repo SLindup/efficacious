@@ -12,7 +12,7 @@ function createSilesia()
     planet2.scale.setTo(.04, .04);
     silesia.add(planet2);
 
-    createObjective();
+    createSilObjective();
 	silesia.add(arrow);
 
     planet = game.add.sprite(3875, 925, 'planet');
@@ -35,6 +35,9 @@ function createAA()
 	azizos = game.add.sprite(-350, -100, 'Azizos');
 	azizos.scale.setTo(.4, .4);
 	AA.add(azizos);
+
+	createAAObjective();
+	AA.add(AAarrow);
 
 	qos = game.add.sprite(-2620, 375, 'Qos');
 	qos.scale.setTo(.25, .25);
@@ -65,6 +68,9 @@ function createVichama() {
 	vSun.scale.setTo(.7, .7);
 	vichama.add(vSun);
 
+	createVicObjective();
+	vichama.add(Vicarrow);
+
 	kon = game.add.sprite(-2030, - 2030,'Kon');
 	kon.scale.setTo(.4, .4);
 	 vichama.add(kon);
@@ -73,15 +79,17 @@ function createVichama() {
 	supay.scale.setTo(.2, .2);
 	vichama.add(supay);
 
+	
+
 	vichama.visible = false;
 }
 
 function loadWorld() {
-	shield = shieldTotal;
+	shield = shieldTotal; //resets shield to full when moving between systems
 	if(system == "Silesia")
 	{
-		silesia.visible = true;
-		if(QosB = true)
+		silesia.visible = true; //shows the silesia group
+		if(QosB == true) //checks if Qos has been freed to know whether to spawn enemies
 		{
 			createEnemies(SilEnemies, objx, objy);
 		}

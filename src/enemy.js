@@ -7,6 +7,8 @@ function createEnemyBullets() {
 	enemyBullets.setAll('anchor.x', 0.5);
 	enemyBullets.setAll('anchor.y', 0.5);
 	enemyBullets.setAll('outOfBoundsKill', true);
+
+	enemyg = game.add.group();
 }
 
 function createExplosions() {
@@ -25,7 +27,7 @@ function createEnemies(num, x, y) {
 
 	enemiesTotal = num;
 	enemiesAlive = num;
-	enemyg = game.add.group();
+	// enemyg = game.add.group();
 
 	for(var i = 0; i < enemiesTotal; i++)
 	{
@@ -37,6 +39,8 @@ EnemyShip = function (index, game, player, bullets, x, y) {
 	var x = x + Math.floor(Math.random()*599) - 299;//game.world.randomX;
 	var y = y + Math.floor(Math.random()*599) - 299;//game.world.randomY; //near the planet
 
+	this.ox = x;
+	this.oy = y;
 	this.game = game;
 	this.health = 25;
 	this.player = player;
@@ -48,12 +52,11 @@ EnemyShip = function (index, game, player, bullets, x, y) {
 
 	this.ship = game.add.sprite(x, y, 'enemy');
 	this.ship.anchor.set(0.5);
-enemyg.add(this.ship);
+	enemyg.add(this.ship);
 	this.ship.name = index.toString();
 	game.physics.enable(this.ship, Phaser.Physics.ARCADE);
-	//this.ship.angle = game.rnd.angle();
-
-	game.physics.arcade.velocityFromRotation(this.ship.rotation, 00, this.ship.body.velocity);
+	
+	//game.physics.arcade.velocityFromRotation(this.ship.rotation, 00, this.ship.body.velocity);
 }
 
 EnemyShip.prototype.damage = function() {
@@ -84,6 +87,7 @@ EnemyShip.prototype.update = function() {
 			var bullet = this.bullets.getFirstDead();
 
 			bullet.reset(this.ship.x, this.ship.y);
+			bullet.lifespan = 2000;
 
 			bullet.rotation = this.game.physics.arcade.moveToObject(bullet, this.player, 500);
 		}
@@ -91,6 +95,13 @@ EnemyShip.prototype.update = function() {
 	else if(this.game.physics.arcade.distanceBetween(this.ship, sprite) < 1000)
 	{	
 		this.game.physics.arcade.moveToObject(this.ship, sprite);
+	}
+	else
+	{
+		for(var i = 0; i < enemies.length; i++)
+		{
+			game.physics.arcade.moveToXY(this.ship, this.ox, this.oy, 600);
+		}
 	}
 }
 
@@ -113,8 +124,7 @@ function checkHit() {
 
 function bulletHitPlayer(ship, bullet) {
 	bullet.kill();
-	//sprite = drain.call(wdp);
-	drain(wdp/2);
+	drain(0.5);
 }
 
 function bulletHitEnemy(ship, bullet) {
@@ -131,16 +141,17 @@ function bulletHitEnemy(ship, bullet) {
 }
 
 function saveEnemies() {
-	if(system == "Silesia")
+	if(system == "Silesia" && QosB == true)
 	{
 		SilEnemies = enemiesAlive;
 	}
 	else if(system == "Azizos")
 	{
 		AAEnemies = enemiesAlive;
-		if(enemiesAlive == 0)
+		if(AAEnemies == 0)
 		{
 			QosB = true;
+			shieldTotal = 150;
 		}
 	}
 	else if(system == "Vichama")

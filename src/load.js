@@ -11,6 +11,7 @@ var loadState = {
     game.load.image('galaxyMap', 'assets/galaxymap.png');
     game.load.image('hyperspace', 'assets/hyperspace.png');
     game.load.image('button', 'assets/button.png');
+    game.load.image('instructions', 'assets/instructions.png');
 
     game.load.image('bullet', 'assets/bullets2.png');
     game.load.image('ebullet', 'assets/bullets.png');

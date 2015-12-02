@@ -4,17 +4,17 @@ var sprite;
 var cursors;
 var tilesprite;
 
-var d = false;
+var instructions;
+
+var d = false; //whether the player is dead to control the explosion animation x and y position
 
 //weapon variables
 var bullets;
 var bulletTime = 0;
 var wdp = 1; //player ship deals wdp damage, enemy deals wdp/2 damage
-var wdrain;
-var wcharge;
 
 //enemy variables
-var enemies;
+var enemies =[];
 var enemyg;
 var enemyBullets;
 var enemiesTotal = 0;
@@ -27,7 +27,7 @@ var explosions;
 //variables for the story
 var QosB = false;
 
-var system = "Vichama";
+var system = "Silesia";
 
 var gMap; //galaxy map
 var hyperspace; //map background
@@ -35,6 +35,7 @@ var GMG; //map group
 var SButton; //silesia button
 var AButton; //azizos button
 var VButton; //vichama button
+var gMS;
 
 var shieldback; //shield background sprite
 
@@ -119,10 +120,13 @@ var objx = 3995; //objective arrow x and y coords
 var objy = 1035;
 
 //objective for AA and Vichama
-var Aobjx = -2600;
-var Aobjy = 375;
-var Vobjx = -2000;
-var Vobjy = -2000;
+var Aobjx = -2500;
+var Aobjy = 475;
+var AAarrow;
+
+var Vobjx = -1950;
+var Vobjy = -1950;
+var Vicarrow;
 
 var here;
 

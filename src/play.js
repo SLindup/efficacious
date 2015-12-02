@@ -7,29 +7,13 @@ var playState = {
         createVichama();
         createPlayer();
         createBullets();
-        //loadWorld();
-
-        //createBullets();
-        //createPlayer();
+      
         sprite.bringToTop();
 
         createExplosions();
         createEnemyBullets();
         
         loadWorld();
-        
-     //    if(system == "Silesia")
-     //    {
-     //    	createEnemies(SilEnemies, Objx, Objy);
-     //    }
-     //    else if(system == "Azizos")
-     //    {
-     //    	createEnemies(AAEnemies, Aobjx, Aobjy);
-     //    }
-     //    else if(system == "Vichama")
-     //    {
-	    //     //createEnemies(VicEnemies, Vobjx, Vobjy);
-	    // }
 
         createHealthBars();
         createStatus();
@@ -45,16 +29,6 @@ var playState = {
         retimer.loop(rechargeTime, this.recharge, this);
         retimer.start();
         retimer.pause();
-
-        wdrain = game.time.create(false);
-        wdrain.loop(500, this.drain, this, wdp);
-        wdrain.start();
-        wdrain.pause();
-
-        wcharge = game.time.create(false);
-        wcharge.loop(rechargeTime, this.recharge, this);
-        wcharge.start();
-        wcharge.pause();
 
         //Map key
         mkey = game.input.keyboard.addKey(Phaser.Keyboard.M);
@@ -93,6 +67,7 @@ var playState = {
 	   	jkey = game.input.keyboard.addKey(Phaser.Keyboard.J);
 	   	jkey.onDown.add(function (jkey) {
 	   		saveEnemies();
+	   		gMS.text = 'System: '+system;
 	   		sprite.animations.play('jump');
 	   		game.time.events.add(Phaser.Timer.SECOND * .6, showGalaxyMap, this);
 	   	})

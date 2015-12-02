@@ -68,10 +68,22 @@ function createWalls() {
     wall4.body.immovable = true;
 }
 
-function createObjective() {
-	arrow = game.add.sprite(770, 700, 'planet'); // change coords to near player
+function createSilObjective() {
+	arrow = game.add.sprite(playerX, playerY, 'planet'); // change coords to near player
     arrow.scale.setTo(0.01, 0.01);
     game.physics.enable(arrow, Phaser.Physics.ARCADE);
+}
+
+function createAAObjective() {
+	AAarrow = game.add.sprite(playerX, playerY, 'Qos');
+	AAarrow.scale.setTo(0.03, 0.03);
+	game.physics.enable(AAarrow, Phaser.Physics.ARCADE);
+}
+
+function createVicObjective() {
+	Vicarrow = game.add.sprite(playerX, playerY, 'Kon');
+	Vicarrow.scale.setTo(0.03, 0.03);
+	game.physics.enable(Vicarrow, Phaser.Physics.ARCADE);
 }
 
 function createStatus() {
@@ -118,6 +130,11 @@ function createGalaxyMap() {
 	VButton.events.onInputDown.add(jumpVichama, this);
 	GMG.add(VButton);
 
+	gMS = game.add.text(600, 75, 'System: '+system, {font: 'Andale mono', fontSize: '12px', fill: '#fff'});
+	gMS.fixedToCamera = true;
+	gMS.alpha = 0.9;
+	GMG.add(gMS);
+
 	GMG.visible = false;
 }
 
@@ -137,7 +154,6 @@ function jumpSilesia() {
 	GMG.visible = false;
 	system = "Silesia";
 	loadWorld();
-	//moveShip();
 	sprite.visible = true;
 	sprite.frame = 0;
 	arrow.x = sprite.body.x;
@@ -150,6 +166,8 @@ function jumpAzizos() {
 	loadWorld();
 	sprite.visible = true;
 	sprite.frame = 0;
+	AAarrow.x = sprite.body.x;
+	AAarrow.y = sprite.body.y;
 }
 
 function jumpVichama() {
@@ -158,6 +176,8 @@ function jumpVichama() {
 	loadWorld();
 	sprite.visible = true;
 	sprite.frame = 0;
+	Vicarrow.x = sprite.body.x;
+	Vicarrow.y = sprite.body.y;
 }
 
 function updateStatus() {
@@ -176,10 +196,22 @@ function updateObjective() {
 	    wall4.body.x = game.camera.x+800;
 	    wall4.body.y = game.camera.y;
 	    game.physics.arcade.collide(arrow, walls);
+	    game.physics.arcade.collide(AAarrow, walls);
+	    game.physics.arcade.collide(Vicarrow, walls);
 
 	    if(arrow.body.x != objx && arrow.body.y != objy)
 	    {
 	        game.physics.arcade.moveToXY(arrow, objx, objy, 600); 
+	    }
+
+	    if(AAarrow.body.x != Aobjx && AAarrow.body.y != Aobjy)
+	    {
+	    	game.physics.arcade.moveToXY(AAarrow, Aobjx, Aobjy, 600);
+	    }
+
+	    if(Vicarrow.body.x != Vobjx && Vicarrow.body.y != Vobjy)
+	    {
+	    	game.physics.arcade.moveToXY(Vicarrow, Vobjx, Vobjy, 600);
 	    }
 	    //end of objective arrow code
 }
