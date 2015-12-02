@@ -37,31 +37,31 @@ function createWalls() {
 	walls = game.add.group();
     walls.enableBody = true;
 
-    wall = walls.create(game.camera.x, game.camera.y);
-    wall.scale.x = 800;
+    wall = walls.create(game.camera.x-100, game.camera.y);
+    wall.scale.x = 1000;
     wall.scale.y = 1;
     game.physics.enable(wall, Phaser.Physics.ARCADE);
     wall.body.immovable = true;
 
-    wall2 = walls.create(game.camera.x, (game.camera.y+700));
-    wall2.scale.x = 800;
+    wall2 = walls.create(game.camera.x-100, (game.camera.y+700));
+    wall2.scale.x = 1000;
     wall2.scale.y = 1;
     // wall.anchor.setTo(0.5, 0.5);
     // wall2.angle = 270;
     game.physics.enable(wall2, Phaser.Physics.ARCADE);
     wall2.body.immovable = true;
 
-    wall3 = walls.create(game.camera.x, game.camera.y);
+    wall3 = walls.create(game.camera.x, game.camera.y-100);
     wall3.scale.x = 1;
-    wall3.scale.y = 700;
+    wall3.scale.y = 900;
     wall3.anchor.setTo(0.5, 0.5);
     wall3.angle = 270;
     game.physics.enable(wall3, Phaser.Physics.ARCADE);
     wall3.body.immovable = true;
 
-    wall4 = walls.create(game.camera.x+game.camera.width, game.camera.y);
+    wall4 = walls.create(game.camera.x+game.camera.width, game.camera.y-100);
     wall4.scale.x = 1;
-    wall4.scale.y = 700;
+    wall4.scale.y = 900;
     wall4.anchor.setTo(0.5, 0.5);
     wall4.angle = 270;
     game.physics.enable(wall4, Phaser.Physics.ARCADE);
@@ -187,14 +187,14 @@ function updateStatus() {
 
 function updateObjective() {
 	 //keep the objective arrow contained within the screen
-	    wall.body.x = game.camera.x;
+	    wall.body.x = game.camera.x-100;
 	    wall.body.y = game.camera.y-31;
-	    wall2.body.x = game.camera.x;
+	    wall2.body.x = game.camera.x-100;
 	    wall2.body.y = game.camera.y+700;
 	    wall3.body.x = game.camera.x-31;
-	    wall3.body.y = game.camera.y;
+	    wall3.body.y = game.camera.y-100;
 	    wall4.body.x = game.camera.x+800;
-	    wall4.body.y = game.camera.y;
+	    wall4.body.y = game.camera.y-100;
 	    game.physics.arcade.collide(arrow, walls);
 	    game.physics.arcade.collide(AAarrow, walls);
 	    game.physics.arcade.collide(Vicarrow, walls);
