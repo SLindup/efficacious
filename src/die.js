@@ -8,6 +8,7 @@ var dieState = {
 		if(this.game.input.activePointer.isDown){
 			shield = 100;
 			health = 50;
+			QosB = false;
 			this.game.state.start('play');
 		}
 	}

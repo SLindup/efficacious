@@ -33,43 +33,57 @@ function createHealthBars() {
         shieldbar.animations.add('low', [0,1], 3, true);
 }
 
-function createObjective() {
+function createWalls() {
 	walls = game.add.group();
-        walls.enableBody = true;
+    walls.enableBody = true;
 
-        wall = walls.create(game.camera.x, game.camera.y);
-        wall.scale.x = 800;
-        wall.scale.y = 1;
-        game.physics.enable(wall, Phaser.Physics.ARCADE);
-        wall.body.immovable = true;
+    wall = walls.create(game.camera.x, game.camera.y);
+    wall.scale.x = 800;
+    wall.scale.y = 1;
+    game.physics.enable(wall, Phaser.Physics.ARCADE);
+    wall.body.immovable = true;
 
-        wall2 = walls.create(game.camera.x, (game.camera.y+700));
-        wall2.scale.x = 800;
-        wall2.scale.y = 1;
-        // wall.anchor.setTo(0.5, 0.5);
-        // wall2.angle = 270;
-        game.physics.enable(wall2, Phaser.Physics.ARCADE);
-        wall2.body.immovable = true;
+    wall2 = walls.create(game.camera.x, (game.camera.y+700));
+    wall2.scale.x = 800;
+    wall2.scale.y = 1;
+    // wall.anchor.setTo(0.5, 0.5);
+    // wall2.angle = 270;
+    game.physics.enable(wall2, Phaser.Physics.ARCADE);
+    wall2.body.immovable = true;
 
-        wall3 = walls.create(game.camera.x, game.camera.y);
-        wall3.scale.x = 1;
-        wall3.scale.y = 700;
-        wall3.anchor.setTo(0.5, 0.5);
-        wall3.angle = 270;
-        game.physics.enable(wall3, Phaser.Physics.ARCADE);
-        wall3.body.immovable = true;
+    wall3 = walls.create(game.camera.x, game.camera.y);
+    wall3.scale.x = 1;
+    wall3.scale.y = 700;
+    wall3.anchor.setTo(0.5, 0.5);
+    wall3.angle = 270;
+    game.physics.enable(wall3, Phaser.Physics.ARCADE);
+    wall3.body.immovable = true;
 
-        wall4 = walls.create(game.camera.x+game.camera.width, game.camera.y);
-        wall4.scale.x = 1;
-        wall4.scale.y = 700;
-        wall4.anchor.setTo(0.5, 0.5);
-        wall4.angle = 270;
-        game.physics.enable(wall4, Phaser.Physics.ARCADE);
-        wall4.body.immovable = true;
+    wall4 = walls.create(game.camera.x+game.camera.width, game.camera.y);
+    wall4.scale.x = 1;
+    wall4.scale.y = 700;
+    wall4.anchor.setTo(0.5, 0.5);
+    wall4.angle = 270;
+    game.physics.enable(wall4, Phaser.Physics.ARCADE);
+    wall4.body.immovable = true;
+}
 
-	arrow = game.add.sprite(770, 700, 'planet'); // change coords to near player
-        arrow.scale.setTo(0.01, 0.01);
-        game.physics.enable(arrow, Phaser.Physics.ARCADE);
+function createSilObjective() {
+	arrow = game.add.sprite(playerX, playerY, 'planet'); // change coords to near player
+    arrow.scale.setTo(0.01, 0.01);
+    game.physics.enable(arrow, Phaser.Physics.ARCADE);
+}
+
+function createAAObjective() {
+	AAarrow = game.add.sprite(playerX, playerY, 'Qos');
+	AAarrow.scale.setTo(0.03, 0.03);
+	game.physics.enable(AAarrow, Phaser.Physics.ARCADE);
+}
+
+function createVicObjective() {
+	Vicarrow = game.add.sprite(playerX, playerY, 'Kon');
+	Vicarrow.scale.setTo(0.03, 0.03);
+	game.physics.enable(Vicarrow, Phaser.Physics.ARCADE);
 }
 
 function createStatus() {
@@ -100,15 +114,26 @@ function createGalaxyMap() {
 	SButton.inputEnabled = true;
 	SButton.input.useHandCursor = true;
 	SButton.events.onInputDown.add(jumpSilesia, this);
+	GMG.add(SButton);
 
 	AButton = game.add.sprite(275, 480, 'button');
 	AButton.fixedToCamera = true;
 	AButton.inputEnabled = true;
 	AButton.input.useHandCursor = true;
 	AButton.events.onInputDown.add(jumpAzizos, this);
+	GMG.add(AButton);
 
 	VButton = game.add.sprite(375, 472, 'button');
 	VButton.fixedToCamera = true;
+	VButton.inputEnabled = true;
+	VButton.input.useHandCursor = true;
+	VButton.events.onInputDown.add(jumpVichama, this);
+	GMG.add(VButton);
+
+	gMS = game.add.text(600, 75, 'System: '+system, {font: 'Andale mono', fontSize: '12px', fill: '#fff'});
+	gMS.fixedToCamera = true;
+	gMS.alpha = 0.9;
+	GMG.add(gMS);
 
 	GMG.visible = false;
 }
@@ -116,9 +141,14 @@ function createGalaxyMap() {
 function showGalaxyMap() {
 	AA.visible = false;
 	silesia.visible = false;
+	vichama.visible = false;
 	sprite.visible = false;
 	GMG.visible = true;
 }
+
+// function moveShip() {
+// 	sprite.rotation = game.Physics.ARCADE.moveToXY(sprite, 0, 0, 300);
+// }
 
 function jumpSilesia() {
 	GMG.visible = false;
@@ -126,7 +156,8 @@ function jumpSilesia() {
 	loadWorld();
 	sprite.visible = true;
 	sprite.frame = 0;
-	
+	arrow.x = sprite.body.x;
+	arrow.y = sprite.body.y;
 }
 
 function jumpAzizos() {
@@ -135,11 +166,23 @@ function jumpAzizos() {
 	loadWorld();
 	sprite.visible = true;
 	sprite.frame = 0;
+	AAarrow.x = sprite.body.x;
+	AAarrow.y = sprite.body.y;
+}
+
+function jumpVichama() {
+	GMG.visible = false;
+	system = "Vichama";
+	loadWorld();
+	sprite.visible = true;
+	sprite.frame = 0;
+	Vicarrow.x = sprite.body.x;
+	Vicarrow.y = sprite.body.y;
 }
 
 function updateStatus() {
 	//HUD text element
-	    statusText.text = '>LCS Efficacious Status\n>>Shield..'+(shield/shieldTotal)*100+'%\n>>Armour..'+health*2+'%\n>>Engines..'+parseInt(sprite.body.speed/6)+'%\n>>Location..'+parseInt(sprite.body.x)+','+parseInt(sprite.body.y)+'\n>';
+	    statusText.text = '>LCS Efficacious Status\n>>Shield..'+parseInt((shield/shieldTotal)*100)+'%\n>>Armour..'+health*2+'%\n>>Engines..'+parseInt(sprite.body.speed/6)+'%\n>>Location..'+parseInt(sprite.body.x)+','+parseInt(sprite.body.y)+'\n>Enemies Detected: '+enemiesAlive;
 }
 
 function updateObjective() {
@@ -153,10 +196,22 @@ function updateObjective() {
 	    wall4.body.x = game.camera.x+800;
 	    wall4.body.y = game.camera.y;
 	    game.physics.arcade.collide(arrow, walls);
+	    game.physics.arcade.collide(AAarrow, walls);
+	    game.physics.arcade.collide(Vicarrow, walls);
 
 	    if(arrow.body.x != objx && arrow.body.y != objy)
 	    {
 	        game.physics.arcade.moveToXY(arrow, objx, objy, 600); 
+	    }
+
+	    if(AAarrow.body.x != Aobjx && AAarrow.body.y != Aobjy)
+	    {
+	    	game.physics.arcade.moveToXY(AAarrow, Aobjx, Aobjy, 600);
+	    }
+
+	    if(Vicarrow.body.x != Vobjx && Vicarrow.body.y != Vobjy)
+	    {
+	    	game.physics.arcade.moveToXY(Vicarrow, Vobjx, Vobjy, 600);
 	    }
 	    //end of objective arrow code
 }

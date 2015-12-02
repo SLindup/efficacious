@@ -2,23 +2,29 @@ var playState = {
 	
 
 	create: function() {
+		createAI();
         createSilesia();
         createAA();
+        createVichama();
+        createPlayer();
+        createBullets();
+      
+        sprite.bringToTop();
+
+        createExplosions();
+        createEnemyBullets();
+        
         loadWorld();
-
-        sprite = game.add.sprite(playerX, playerY, 'player'); // change arrow coords to nearby
-        sprite.frame = 0;
-        sprite.anchor.set(0.5);
-        sprite.animations.add('jump', [0,1,2,3,4,5,6,7,8,9,0], 15, false);
-
-        game.physics.enable(sprite, Phaser.Physics.ARCADE);
-        sprite.body.maxVelocity.set(600);
 
         createHealthBars();
         createStatus();
 
+        createWalls();
+
+
+
         discharge = game.time.create(false);
-        discharge.loop(500, this.drain, this, 1);
+        discharge.loop(500, drain, this, 1);
         discharge.start();
         discharge.pause();
 
@@ -28,14 +34,26 @@ var playState = {
         retimer.pause();
 
         //Map key
-        SilesiaMap = game.add.group();
-
         mkey = game.input.keyboard.addKey(Phaser.Keyboard.M);
 
         createSilesiaMap();
         createAAMap();
+        createVichamaMap();
+
+        here = game.add.sprite(10, 10,'here');
+        here.fixedToCamera = true;
+        here.alpha = 0.9;
+        here.visible = false;
 
 	   	createGalaxyMap();
+
+		aiback.bringToTop();
+        aitext.bringToTop();
+	   	game.time.events.add(Phaser.Timer.SECOND * 13, toL2, this); //change back to 13
+
+	   	function toL2(){
+	   		aitext.text = l2;
+	   	}
 
 	   	mkey.onDown.add(function (mkey) {
 	   		showMap();
@@ -59,9 +77,27 @@ var playState = {
 
 	   	jkey = game.input.keyboard.addKey(Phaser.Keyboard.J);
 	   	jkey.onDown.add(function (jkey) {
+	   		
+	   		saveEnemies();
+	   		gMS.text = 'System: '+system;
 	   		sprite.animations.play('jump');
-	   		game.time.events.add(Phaser.Timer.SECOND * .6, showGalaxyMap, this);
+	   		if(!end){
+		   		game.time.events.add(Phaser.Timer.SECOND * .6, showGalaxyMap, this);
+		   		if(aitext.text == l2)
+		   		{
+		   			aitext.text = l4;
+		   		}
+		   	}
+		   	else
+		   	{
+		   		game.time.events.add(Phaser.Timer.SECOND * .6, goEnd, this);
+		   		function goEnd(){
+		   			this.game.state.start('end');
+		   		}
+		   	}
 	   	})
+
+	   	game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
 
         //creating cursor keys
         cursors = game.input.keyboard.createCursorKeys();
@@ -88,6 +124,12 @@ var playState = {
     	AAtilesprite.tilePosition.x = -game.camera.x;
     	AAtilesprite.tilePosition.y = -game.camera.y;
 
+    	Vtilesprite.x = game.camera.x;
+    	Vtilesprite.y = game.camera.y;
+
+    	Vtilesprite.tilePosition.x = -game.camera.x;
+    	Vtilesprite.tilePosition.y = -game.camera.y;
+
     	//Player movement
     	if (cursors.up.isDown)
 	    {
@@ -109,15 +151,21 @@ var playState = {
 	    //Player rotation
 	    if (cursors.left.isDown)
 	    {
-	        sprite.body.angularVelocity = -70;
+	        sprite.body.angularVelocity = -80;
 	    }
 	    else if (cursors.right.isDown)
 	    {
-	        sprite.body.angularVelocity = 70;
+	        sprite.body.angularVelocity = 80;
 	    }
 	    else
 	    {
 	        sprite.body.angularVelocity = 0;
+	    }
+
+	    //firing weapon
+	    if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
+	    {
+	    	fireBullet();
 	    }
 
 	    //being too close to the sun
@@ -136,26 +184,72 @@ var playState = {
 	    updateStatus();
 
 	    updateObjective();
-	},
 
-	drain: function(dp)
-	{
-	    if(shield > 0)
+	    checkHit();
+
+	    if(aitext.text == l5 && game.physics.arcade.distanceBetween(sprite, qos) < 1500)
 	    {
-	        shield -= dp;
-	        
+	    	aitext.text = l6;
 	    }
-	    if(shield == 0 && health > 0)
+	    if(aitext.text == l6 && system == "Azizos" && enemiesAlive == 0)
 	    {
-	        health -= dp;
+	    	aitext.text = l8;
 	    }
-	    if(health == 0)
+	    if(aitext.text == l8)
 	    {
-	        this.die();
+	    	game.time.events.add(Phaser.Timer.SECOND * 13, toL9, this); //change back to 13
+	    	function toL9() {
+	    		aitext.text = l9;
+	    	}
 	    }
-	    shieldbar.scale.setTo(shield/shieldTotal, 1);
-	    this.armourDrain();
-	    shieldbar.animations.play('low');
+	    if(aitext.text == l9)
+	    {
+	    	game.time.events.add(Phaser.Timer.SECOND * 13, toL10, this); //change back to 13
+	    	function toL10() {
+	    		aitext.text = l10;
+	    	}
+	    }
+	    if(aitext.text == l10)
+	    {
+	    	game.time.events.add(Phaser.Timer.SECOND * 13, toL11, this); //change back to 13
+	    	function toL11() {
+	    		aitext.text = l11;
+	    	}
+	    }
+
+	   	if(aitext.text == l13 && game.physics.arcade.distanceBetween(sprite, planet) < 500)
+	   	{	
+	   		aitext.text = l14;
+	   	}
+	   	else if(aitext.text == l14 && enemiesAlive == 0 && system == "Silesia")
+	   	{
+	   		aitext.text = l15;
+	   	}
+	   	else if(aitext.text == l15)
+	   	{
+	   		game.time.events.add(Phaser.Timer.SECOND * 13, toL16, this);
+	   		function toL16(){
+	   			aitext.text = l16;
+	   			wdp = 2;
+	   		}
+	   	}
+	   	else if(aitext.text == l16)
+	   	{
+	   		game.time.events.add(Phaser.Timer.SECOND * 13, toL17, this);
+	   		function toL17(){
+	   			aitext.text = l17;
+	   		}
+	   	}
+	   	else if(aitext.text == l19 && game.physics.arcade.distanceBetween(sprite, kon) < 1000)
+	   	{	
+	   		aitext.text = l20;
+	   	}
+
+	   	else if(system == "Vichama" && enemiesAlive == 0)
+	   	{
+	   		aitext.text = l21;
+	   		end = true;
+	   	}
 	},
 
 	recharge: function()
@@ -167,34 +261,6 @@ var playState = {
 	    shieldbar.scale.setTo(shield/shieldTotal, 1);
 	    shieldbar.animations.stop();
 	    shieldbar.frame = 0;
-	},
-
-	armourDrain: function()
-	{
-	    if(health >= 40)
-	    {
-	        armour5.scale.setTo((health-40)/10, 1);
-	    }
-	    if(health >= 30 && health < 40)
-	    {
-	        armour4.scale.setTo((health-30)/10, 1);
-	    }
-	    if(health >= 20 && health <30)
-	    {
-	        armour3.scale.setTo((health - 20)/10, 1);
-	    }
-	    if(health >=10 && health < 20)
-	    {
-	        armour2.scale.setTo((health - 10)/ 10, 1);
-	    }
-	    if(health >=0 && health < 10)
-	    {
-	        armour.scale.setTo((health)/ 10, 1); 
-	    }
-	},
-
-	die: function() {
-		game.state.start('die');
 	}
 
 };
