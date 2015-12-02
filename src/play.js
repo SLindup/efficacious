@@ -2,6 +2,7 @@ var playState = {
 	
 
 	create: function() {
+		createAI();
         createSilesia();
         createAA();
         createVichama();
@@ -19,6 +20,8 @@ var playState = {
         createStatus();
 
         createWalls();
+
+
 
         discharge = game.time.create(false);
         discharge.loop(500, drain, this, 1);
@@ -44,6 +47,14 @@ var playState = {
 
 	   	createGalaxyMap();
 
+		aiback.bringToTop();
+        aitext.bringToTop();
+	   	game.time.events.add(Phaser.Timer.SECOND * 13, toL2, this); //change back to 13
+
+	   	function toL2(){
+	   		aitext.text = l2;
+	   	}
+
 	   	mkey.onDown.add(function (mkey) {
 	   		showMap();
 	   		game.paused = !game.paused;
@@ -66,10 +77,24 @@ var playState = {
 
 	   	jkey = game.input.keyboard.addKey(Phaser.Keyboard.J);
 	   	jkey.onDown.add(function (jkey) {
+	   		
 	   		saveEnemies();
 	   		gMS.text = 'System: '+system;
 	   		sprite.animations.play('jump');
-	   		game.time.events.add(Phaser.Timer.SECOND * .6, showGalaxyMap, this);
+	   		if(!end){
+		   		game.time.events.add(Phaser.Timer.SECOND * .6, showGalaxyMap, this);
+		   		if(aitext.text == l2)
+		   		{
+		   			aitext.text = l4;
+		   		}
+		   	}
+		   	else
+		   	{
+		   		game.time.events.add(Phaser.Timer.SECOND * .6, goEnd, this);
+		   		function goEnd(){
+		   			this.game.state.start('end');
+		   		}
+		   	}
 	   	})
 
 	   	game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
@@ -161,6 +186,70 @@ var playState = {
 	    updateObjective();
 
 	    checkHit();
+
+	    if(aitext.text == l5 && game.physics.arcade.distanceBetween(sprite, qos) < 1500)
+	    {
+	    	aitext.text = l6;
+	    }
+	    if(aitext.text == l6 && system == "Azizos" && enemiesAlive == 0)
+	    {
+	    	aitext.text = l8;
+	    }
+	    if(aitext.text == l8)
+	    {
+	    	game.time.events.add(Phaser.Timer.SECOND * 13, toL9, this); //change back to 13
+	    	function toL9() {
+	    		aitext.text = l9;
+	    	}
+	    }
+	    if(aitext.text == l9)
+	    {
+	    	game.time.events.add(Phaser.Timer.SECOND * 13, toL10, this); //change back to 13
+	    	function toL10() {
+	    		aitext.text = l10;
+	    	}
+	    }
+	    if(aitext.text == l10)
+	    {
+	    	game.time.events.add(Phaser.Timer.SECOND * 13, toL11, this); //change back to 13
+	    	function toL11() {
+	    		aitext.text = l11;
+	    	}
+	    }
+
+	   	if(aitext.text == l13 && game.physics.arcade.distanceBetween(sprite, planet) < 500)
+	   	{	
+	   		aitext.text = l14;
+	   	}
+	   	else if(aitext.text == l14 && enemiesAlive == 0 && system == "Silesia")
+	   	{
+	   		aitext.text = l15;
+	   	}
+	   	else if(aitext.text == l15)
+	   	{
+	   		game.time.events.add(Phaser.Timer.SECOND * 13, toL16, this);
+	   		function toL16(){
+	   			aitext.text = l16;
+	   			wdp = 2;
+	   		}
+	   	}
+	   	else if(aitext.text == l16)
+	   	{
+	   		game.time.events.add(Phaser.Timer.SECOND * 13, toL17, this);
+	   		function toL17(){
+	   			aitext.text = l17;
+	   		}
+	   	}
+	   	else if(aitext.text == l19 && game.physics.arcade.distanceBetween(sprite, kon) < 1000)
+	   	{	
+	   		aitext.text = l20;
+	   	}
+
+	   	else if(system == "Vichama" && enemiesAlive == 0)
+	   	{
+	   		aitext.text = l21;
+	   		end = true;
+	   	}
 	},
 
 	recharge: function()

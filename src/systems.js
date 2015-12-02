@@ -93,9 +93,17 @@ function loadWorld() {
 		{
 			createEnemies(SilEnemies, objx, objy);
 		}
+		if(aitext.text == l11)
+		{
+			aitext.text = l13;
+		}
 	}
 	else if(system == "Azizos")
 	{
+		if(aitext.text == l4)
+		{
+			aitext.text = l5;
+		}
 		AA.visible = true;
 		createEnemies(AAEnemies, Aobjx, Aobjy);
 	}
@@ -103,6 +111,10 @@ function loadWorld() {
 	{
 		vichama.visible = true;
 		createEnemies(VicEnemies, Vobjx, Vobjy);
+		if(aitext.text == l17)
+		{
+			aitext.text = l19;
+		}
 	}
 	else
 	{

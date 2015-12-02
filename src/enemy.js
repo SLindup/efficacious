@@ -151,7 +151,7 @@ function saveEnemies() {
 		if(AAEnemies == 0)
 		{
 			QosB = true;
-			shieldTotal = 150;
+			shieldTotal = 200;
 		}
 	}
 	else if(system == "Vichama")

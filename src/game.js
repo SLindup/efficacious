@@ -5,8 +5,11 @@ var cursors;
 var tilesprite;
 
 var instructions;
+var aitext;
+var aiback;
 
 var d = false; //whether the player is dead to control the explosion animation x and y position
+var end = false;
 
 //weapon variables
 var bullets;
@@ -39,8 +42,8 @@ var gMS;
 
 var shieldback; //shield background sprite
 
-var playerX = -2000; //player starting x and y position
-var playerY = -1421;
+var playerX = 4105; //player starting x and y position
+var playerY = 1115;
 
 //armour
 var armour;
@@ -147,7 +150,9 @@ var jkey;
 game.state.add('boot', bootState);
 game.state.add('load', loadState);
 game.state.add('menu', menuState);
+game.state.add('opening', openState);
 game.state.add('play', playState);
 game.state.add('die', dieState);
+game.state.add('end', endState);
 
 game.state.start('boot');
