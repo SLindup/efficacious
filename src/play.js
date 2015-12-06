@@ -94,6 +94,7 @@ var playState = {
 		   		function goEnd(){
 		   			this.game.state.start('end');
 		   		}
+		   		end = false;
 		   	}
 	   	})
 
