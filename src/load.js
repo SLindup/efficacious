@@ -2,7 +2,7 @@ var loadState = {
     preload: function() {
     var loadingLabel = game.add.text(80, 150, 'Loading...', {font: '30px Andale Mono', fill: '#fff'});
 
-    game.load.image('logo', 'assets/lclogo.jpg');
+    game.load.image('logo', 'assets/LClogo.jpg');
     game.load.spritesheet('player', 'assets/spritesheet3.png', 100, 100, 10);
     game.load.spritesheet('shield', 'assets/shieldbar2.png', 400, 25, 2);
     game.load.image('armour', 'assets/armour.png');
