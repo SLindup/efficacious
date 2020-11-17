@@ -48,6 +48,7 @@ var playState = {
 	   	createGalaxyMap();
 
 		aiback.bringToTop();
+		nametext.bringToTop();
         aitext.bringToTop();
 	   	game.time.events.add(Phaser.Timer.SECOND * 13, toL2, this); //change back to 13
 

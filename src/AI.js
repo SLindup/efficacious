@@ -3,7 +3,10 @@ function createAI(){
 	aiback = game.add.sprite(295, 545, 'ai');
 	aiback.fixedToCamera = true;
 
-	aitext = game.add.text(320, 555, l1, {font: 'Andale Mono', fontSize: '15px', fill: '#fff'});
+	nametext = game.add.text(320, 555, 'Tristan:', {font: 'Andale Mono', fontSize: '15px', fill: '#fff'});
+	nametext.fixedToCamera = true;
+
+	aitext = game.add.text(320, 575, l1, {font: 'Andale Mono', fontSize: '15px', fill: '#fff'});
 	aitext.fixedToCamera = true;
 }
 
