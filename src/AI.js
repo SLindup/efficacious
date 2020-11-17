@@ -8,7 +8,7 @@ function createAI(){
 }
 
 
-var l1 = "Greetings Captain, I'm Tristan your shipboard \nArtificial Intelligence, I'll be taking over as \nyour Second in Command while your XO is \nout of action.";
+var l1 = "Greetings Captain, I'll be taking over as \nyour Second in Command while your XO is \nout of action.";
 
 var l2 = "Today we're going to test the jump drive to see just \nhow far we can safely travel. We're also going to be \ntransporting some cargo to Qos in the Azizos system.\n\nPress J to bring up the galaxy map.";
 
@@ -16,7 +16,7 @@ var l2 = "Today we're going to test the jump drive to see just \nhow far we can 
 
 var l4 = "As you can see the range is very limited. Click on \nAzizos to initiate jump.";
 
-var l5 = "Welcome to Azizos-Arsu, Captain. Qos is currently \nlocated at ("+Aobjx+', '+Aobjy+"), you can press M to see a \nmap of the system.";
+var l5 = "Welcome to the Azizos-Arsu system, Captain. Qos \nis currently located at ("+Aobjx+', '+Aobjy+"), \nyou can press M to see a map of the system.";
 
 var l6 = "Uh oh, detecting rebel ships in orbit around Qos. \nCaptain it looks like this drive test has just \nturned into a full combat test.";
 
