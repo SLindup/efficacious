@@ -48,6 +48,7 @@ var playState = {
 	   	createGalaxyMap();
 
 		aiback.bringToTop();
+		nametext.bringToTop();
         aitext.bringToTop();
 	   	game.time.events.add(Phaser.Timer.SECOND * 13, toL2, this); //change back to 13
 
@@ -90,11 +91,12 @@ var playState = {
 		   	}
 		   	else
 		   	{
-		   		game.time.events.add(Phaser.Timer.SECOND * .6, goEnd, this);
+		   		game.time.events.add(Phaser.Timer.SECOND * .6, goEnd, this); //timer to allow jump animation to complete before end screen
+		   		end = false;
 		   		function goEnd(){
 		   			this.game.state.start('end');
 		   		}
-		   		end = false;
+		   		
 		   	}
 	   	})
 
